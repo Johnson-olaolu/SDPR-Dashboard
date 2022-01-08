@@ -1,3 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    @apply font-Roboto;
+}
+
+.jumbotron .font-Dosis {
+    line-height: 72px;
+}
+
+
+.homepage-background {
+    background: url("./img/jumbotron\ background.png");
+    min-height: 830px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.our-clients {
+    background: #0CA59D;
+}
+
+.qoutebox {
+    position: relative;
+}
+
+.qoutebox::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 0; 
+    height: 0; 
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 16px solid white;
+    @apply shadow-2xl;
+}
+
+footer .footer {
+    background: #08756F;
+}
+
+.footer-menu-item h2 {
+    position: relative;
+}
+
+.footer-menu-item h2::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    @apply -bottom-2 left-0 w-10 bg-amber-500;
+}
+
+.service1-dashboard {
+    background: #0CA59D;;
+}
