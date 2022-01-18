@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class StudentDataDropout(models.Model) :
+class StudentData(models.Model) :
     studentID = models.CharField(max_length=100000) 
     Complete1 = models.IntegerField()
     CompleteCIP1  = models.IntegerField()
