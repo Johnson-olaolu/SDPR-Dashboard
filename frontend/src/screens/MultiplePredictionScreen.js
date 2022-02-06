@@ -1,28 +1,37 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import TableRow from '../components/TableRow'
 
 
 const MultiplePredictionScreen = ({ location }) => {
-
+    const history = useHistory()
     const [studentDataView, setStudentDataView] = useState([])
     const [pageNumber, setPageNumber] = useState(1)
-    const [numPages, setNumPages] = useState([1,2,3,4,5])
+    const [numPages, setNumPages] = useState([])
+    const [selectedPrediction, setSelectedPrediction] = useState({});
     useEffect(() => {
         const studentData = location.state.studentData
-        if ((studentData.length / 100) > 1) {
-
-            // var pages = 
-            //  Array.from(Array(()).keys())
-            
+        var pages = Math.round(studentData.length/100)
+        if (pages > 1) {
+            setNumPages( Array.from(Array(pages).keys()))
             // setNumPages()
-            var startNumber = 10 * (pageNumber - 1)
-            var endNumber = (10 * pageNumber) - 1
+            var startNumber = 100 * (pageNumber - 1)
+            var endNumber = (100 * pageNumber) - 1
             setStudentDataView(studentData.slice(startNumber, endNumber))
         }else {
             setStudentDataView(studentData)
         }
 
     }, [pageNumber])
+
+    const onClickPrediction =(studentID) => {
+        console.log(studentID)
+        const selectedStudent = studentDataView.filter(studentData => studentData.StudentID ===  studentID)
+        console.log(selectedStudent)
+        history.push(`/dashboard/recommendation/${selectedStudent[0].StudentID}`, {
+            selectedStudent : selectedStudent[0]
+        })
+    }
     return (
         <div>
             <div className="h-40 green-background flex justify-center items-center">
@@ -67,7 +76,7 @@ const MultiplePredictionScreen = ({ location }) => {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {studentDataView.map((student) => (
-                                            <TableRow student={student} />
+                                            <TableRow student={student} onClickPrediction = {onClickPrediction}/>
                                         ))}
                                     </tbody>
                                 </table>
@@ -78,7 +87,8 @@ const MultiplePredictionScreen = ({ location }) => {
             </div>
             <div className="mt-10 max-w-4xl mx-auto grid grid-cols-12 gap-2 justify-evenly">
                 { numPages.map((page, index) =>(
-                    <div key={index} className=" h-10 w-10 rounded-full green-background text-white font-bold flex justify-center items-center ">{page}</div>
+                    <div key={index} className=" h-10 w-10 rounded-full green-background text-white font-bold flex justify-center items-center cursor-pointer"
+                    onClick={() => {setPageNumber(page)}}>{page}</div>
                 ) ) }
             </div>
         </div>
