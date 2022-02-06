@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import TableRow from '../components/TableRow'
+import { CompeteStudentData } from '../store'
 
 
 const MultiplePredictionScreen = ({ location }) => {
@@ -9,8 +10,10 @@ const MultiplePredictionScreen = ({ location }) => {
     const [pageNumber, setPageNumber] = useState(1)
     const [numPages, setNumPages] = useState([])
     const [selectedPrediction, setSelectedPrediction] = useState({});
+    const CompleteStudent = useContext(CompeteStudentData)
     useEffect(() => {
         const studentData = location.state.studentData
+        CompleteStudent.setCompleteStudent(studentData)
         var pages = Math.round(studentData.length/100)
         if (pages > 1) {
             setNumPages( Array.from(Array(pages).keys()))

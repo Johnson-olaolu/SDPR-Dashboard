@@ -1,14 +1,20 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { CompeteStudentData } from '../store'
+import React, { useContext, useEffect, useState } from 'react'
 
 const SingleRecommendation = ({ match ,  location }) => {
-    const [student, setStudent] = useState({})
+    const [student, setStudent] = useState({});
     const [recommendations, setRecommendations] = useState([])
+    const completeStudent = useContext(CompeteStudentData).completeStudent
+    
     useEffect(() => {
-        // const id = match.params.id
-        setStudent(location.state.selectedStudent)
+        const id = match.params.id
+        console.log(id)
+        const selectedStudent = completeStudent.filter(singleStudent => singleStudent.StudentID == id)
+        console.log(selectedStudent)
+        setStudent(selectedStudent[0])
         console.log(location)
-        axios.post(`/recommendation` , {student :location.state.selectedStudent})
+        axios.post(`/recommendation` , {student : selectedStudent[0]})
             .then(res => {
                 console.log(res)
                 setRecommendations(res.data.recommendations)
