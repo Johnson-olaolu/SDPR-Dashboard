@@ -10,7 +10,8 @@ const SingleRecommendation = ({ match ,  location }) => {
         console.log(location)
         axios.post(`/recommendation` , {student :location.state.selectedStudent})
             .then(res => {
-
+                console.log(res)
+                setRecommendations(res.data.recommendations)
             })
             .catch(err => {
                 console.error(err.response);
@@ -26,9 +27,9 @@ const SingleRecommendation = ({ match ,  location }) => {
             </div>
             <div className=" container mx-auto mt-10">
                 <h2 className=" text-3xl text-gray-500">Recommendations</h2>
-                <ul className="">
+                <ul className="mt-2">
                     {recommendations.map(recommendation => (
-                        <li className="">{recommendation}</li>
+                        <li className=" text-gray-700 py-1 text-xl">{recommendation}</li>
                     ))}
                 </ul>
             </div>
